@@ -1,0 +1,12 @@
+FROM openjdk:17-jdk-alpine
+
+#naveen
+#FROM eclipse-temurin:11-alpine
+#ARG JAR_FILE=target/*jar
+ARG USERNAME
+ARG PASSWORD
+ENV MONGO_USERNAME=${USERNAME}
+ENV MONGO_PASSWORD=${PASSWORD}
+EXPOSE 8081
+COPY target/services-0.0.1-SNAPSHOT.jar transaction.jar
+ENTRYPOINT ["java","-jar","transaction.jar"]
