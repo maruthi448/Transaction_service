@@ -1,8 +1,5 @@
 FROM openjdk:17-jdk-alpine
 
-#naveen
-#FROM eclipse-temurin:11-alpine
-#ARG JAR_FILE=target/*jar
 ARG USERNAME
 ARG PASSWORD
 ENV MONGODB_USERNAME=${USERNAME}
