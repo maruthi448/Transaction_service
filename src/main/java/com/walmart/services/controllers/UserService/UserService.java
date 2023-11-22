@@ -45,9 +45,6 @@ public class UserService {
   @Autowired
   PasswordEncoder encoder;
 
-//  @Value("${MONGODB_USERNAME}")
-//  public String udid;
-
   @Autowired
   JwtUtils jwtUtils;
 
@@ -73,11 +70,6 @@ public class UserService {
             .map(item -> item.getAuthority())
             .collect(Collectors.toList());
 
-    /*return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-            .body(new UserInfoResponse(userDetails.getId(),
-                   userDetails.getUsername(),
-                    userDetails.getEmail(),
-                    roles));*/
 
      return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
             .body(new MessageResponse("Login successful !!" ));
@@ -105,8 +97,6 @@ public class UserService {
               .body(new MessageResponse("Error: Phone number already in use!"));
     }
 
-    //SignupRequest.Address address1 = new SignupRequest.Address();
-    // Create new user's account
     User user = new User(signUpRequest.getUsername(),
             signUpRequest.getEmail(),
             encoder.encode(signUpRequest.getPassword()),
@@ -121,11 +111,6 @@ public class UserService {
     Set<String> strRoles = signUpRequest.getRoles();
     Set<Role> roles = new HashSet<>();
 
-    /*if (strRoles == null) {
-      Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-              .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-      roles.add(userRole);
-    } else {*/
       strRoles.forEach(role -> {
         switch (role) {
           case "admin":
@@ -146,7 +131,6 @@ public class UserService {
             roles.add(userRole);
         }
       });
-    //}
 
     user.setRoles(roles);
     userRepository.save(user);
